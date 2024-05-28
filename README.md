@@ -15,4 +15,4 @@ alts
 
 | Project | Description |
 | --- | --- |
-| `rics piic dcs 2122` | [Distributed Control System](/rics_piic_dcs-21_22/README.md) |
+| `rics piic dcs 2122` | [Distributed Control System](/rics_piic_dcs-21_22) |
