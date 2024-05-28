@@ -13,3 +13,6 @@ This portfolio represents five years of learning, discovery, and growth. It's a 
 
 alts
 
+| Project | Description |
+| --- | --- |
+| `rics piic dcs 2122` | [Distributed Control System](/rics_piic_dcs-21_22/README.md) |
