@@ -1,2 +1,0 @@
-C:\Users\altsm\source\repos\SplitterConveyor\x64\Debug\SplitterConveyor.exe
-C:\str\SplitterConveyor\x64\Debug\SplitterConveyor.dll
