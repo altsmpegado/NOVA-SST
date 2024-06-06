@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My first Three.js app</title>
+    
+</head>
+<body>
+    <div id="wrapper" style="float:left;">
+        <div id="div1">
+
+            <!--
+                name:<input type="text" id="textbox_name"><br/>
+
+                sizeX:<input type="text" id="textbox_size_x">
+                <input type="range"  id="range_size_x" min="0" max="1000">
+
+                sizeY:<input type="text" id="textbox_size_y">
+                <input type="range"  id="range_size_y" min="0" max="1000">
+
+                sizeZ:<input type="text" id="textbox_size_z">
+                <input type="range"  id="range_size_z" min="0" max="1000"><br/>
+
+
+                pX:<input type="text" id="textbox_position_x">
+                <input type="range"  id="range_position_x" min="-1000" max="1000">
+
+                pY:<input type="text" id="textbox_position_y">
+                <input type="range"  id="range_position_y" min="-1000" max="1000">
+
+                pZ:<input type="text" id="textbox_position_z">
+                <input type="range"  id="range_position_z" min="-1000" max="1000"><br/>
+
+                RX:<input type="text" id="textbox_rotation_x">
+                <input type="range"  id="range_rotation_x" min="-1000" max="1000">
+
+                RY:<input type="text" id="textbox_rotation_y">
+                <input type="range"  id="range_rotation_y" min="-1000" max="1000">
+
+                RZ:<input type="text" id="textbox_rotation_z">
+                <input type="range"  id="range_rotation_z" min="-1000" max="1000"><br/>
+            -->
+            <button type="button" id="up">Up</button>
+            <button type="button" id="stop_up_down">Stop</button>
+            <button type="button" id="down">down</button> 
+            <button type="button" id="left">left</button>
+            <button type="button" id="stop_left_right">Stop</button>
+            <button type="button" id="right">right</button> 
+            <button type="button" id="horiz_sweep_on">horiz_sweep_on</button>
+            <button type="button" id="horiz_swepp_off">horiz_swepp_off</button>
+            <button type="button" id="vertc_sweep_on">vertc_sweep_on</button>
+            <button type="button" id="vertc_swepp_off">vertc_swepp_off</button>            
+            collision:<input type="text" id="textbox_collision">
+            Count numbers: <output id="result"></output>
+        </div>
+        <div id="container"></div>
+
+    </div>
+    
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/OBJLoader.js"></script>
+    <script src="js/controls/TrackballControls.js"></script>
+    <script src="js/wash_gui.js"></script>
+    <script src="js/wash_scene.js"></script>
+    
+
+
+
+</body>
+</html>

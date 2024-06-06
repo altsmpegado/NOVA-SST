@@ -1,0 +1,569 @@
+
+
+var all_objects = [];
+var sensors = [];
+var actuators = [];
+var new_events = [];
+var leftray = new THREE.Vector3();
+var rightray = new THREE.Vector3();
+
+
+var scene = new THREE.Scene();
+//scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025 );
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 25000 );
+
+var the_worker;
+
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+
+
+container = document.getElementById( 'container' );
+
+
+//document.body.appendChild( renderer.domElement );
+container.appendChild( renderer.domElement );
+
+
+controls = new THREE.TrackballControls( camera,container );
+				controls.rotateSpeed = 1.0;
+				controls.zoomSpeed = 1.2;
+				controls.panSpeed = 0.8;
+				controls.noZoom = false;
+				controls.noPan = false;
+				controls.staticMoving = true;
+				controls.dynamicDampingFactor = 0.3;
+				controls.keys = [ 65, 83, 68 ];
+				controls.addEventListener( 'change', render );
+
+
+				window.addEventListener('resize', onWindowResize, false);
+
+			//	window.addEventListener('wheel', mousewheel, false);
+
+
+				//window.addEventListener("mousedown", animate2, false);
+				//window.addEventListener("mousewheel", animate2, false);
+
+
+
+
+
+				function mousewheel(event)
+				{
+				    console.log("event");
+
+				}
+
+
+//addGround();
+
+var contour=null;
+loadModel('car',         'models/volkswagen-touareg.json');
+loadModel('wash_station','models/wash_station.json');
+
+$.getJSON("models/volkswagen-touareg-contour.json", function(jsonObj) {
+    	//console.log(jsonObj); 
+    	//alert(jsonObj.length);
+	  	//alert(jsonObj[1].x);
+	  	//alert(jsonObj[1].y);
+	  	contour= jsonObj;
+	});
+
+    
+
+
+
+
+
+
+//loadObj(); 
+
+//cars simples
+//http://opengameart.org/content/car-vw-corradon
+
+
+camera.position.set(-3628, 868, 8000);
+camera.rotation.set(-12, -22, -5);
+
+all_objects["camera"]=camera;
+
+var ambient = new THREE.AmbientLight( 0xffffff, 1 );
+var spotLight = new THREE.SpotLight( 0xffffff, 10 );
+var lightHelper;
+spotLight.position.set( 0, 4000, 0 );
+				spotLight.castShadow = true;
+				spotLight.angle = 1.05;//Math.PI/2 ;
+				spotLight.penumbra = 0;
+				spotLight.decay = 2;
+				spotLight.distance = 3000;
+				/*
+				spotLight.shadow.mapSize.width = 1024;
+				spotLight.shadow.mapSize.height = 1024;
+				spotLight.shadow.camera.near = 1;
+				spotLight.shadow.camera.far = 200;
+*/
+
+
+				//lightHelper = new THREE.SpotLightHelper( spotLight );
+
+				scene.add( spotLight );
+				//scene.add( new THREE.AxisHelper( 100 ) );
+				//scene.add( lightHelper );
+				scene.add( ambient );
+				
+				startWorker(); 
+				animate();
+				
+				
+
+				var refresh_it = true;
+
+
+function animate() {
+				requestAnimationFrame( animate );
+				controls.update();
+				render();
+				if (refresh_it) {
+				    
+				    perform_behavior();
+				    refresh_it = false;
+				}
+			}
+
+
+function render() {
+	//requestAnimationFrame( render );
+	//lightHelper.update(); // required
+	renderer.render( scene, camera );
+	//controls.update();
+	//cube.rotation.x += 0.1;
+    //cube.rotation.y += 0.1;
+	//$("#textbox_collision").val("");
+
+     
+
+    
+}
+
+
+function perform_behavior()
+{
+    detect_collision("contact_begin", "switch_begin");
+    detect_collision("contact_end", "switch_end");
+
+    detect_collision("contact_up_down", "switch_up");
+    detect_collision("contact_up_down", "switch_down");
+
+
+    if (move_up == 1 && all_objects["vertical_mechanism"].position.y < 2.25502) {
+        all_objects["vertical_mechanism"].position.y += 0.01;
+        // move_up = 0;
+    }
+    if (move_down == 1 && all_objects["vertical_mechanism"].position.y > 0.3900) {
+        all_objects["vertical_mechanism"].position.y -= 0.01;
+        //   move_down = 0;
+    }
+
+    if (move_left == 1 && all_objects["horizontal_mechanism"].position.x > -2.846) {
+        all_objects["horizontal_mechanism"].position.x -= 0.01;
+        //    move_left = 0;
+
+    }
+
+    if (move_right == 1 && all_objects["horizontal_mechanism"].position.x < 2.888) {
+        all_objects["horizontal_mechanism"].position.x += 0.01;
+        //  move_right = 0;
+
+    }
+
+    if (rotate_sweep_horiz == 1) {
+        all_objects["horizontal_sweep"].rotation.y += 0.3;
+    }
+
+    if (rotate_sweep_verti == 1) {
+        all_objects["left_sweep"].rotation.y -= 0.3;
+        all_objects["right_sweep"].rotation.y += 0.3;
+    }
+
+
+    // countour detection
+
+    if (contour != null) {
+
+        leftray.setFromMatrixPosition(all_objects["ir_left_ray"].matrixWorld);
+
+
+        rightray.setFromMatrixPosition(all_objects["ir_right_ray"].matrixWorld);
+
+
+        for (i = 1; i < contour.length; i++) {// must be i_start=1;
+            x_ini = contour[i - 1].x;
+            y_ini = contour[i - 1].y;
+            x_end = contour[i].x;
+            y_end = contour[i].y;
+
+
+
+            m = (y_end - y_ini) / (x_end - x_ini + 0.0000001);
+            b = y_end - m * x_end;
+
+            y_point_left = m * leftray.x + b;
+            y_point_right = m * rightray.x + b;
+
+            if (leftray.x >= x_ini && leftray.x <= x_end)
+                if (leftray.y <= y_point_left) {
+                    //////$("#textbox_collision").val("ir_left_ray");
+                    sensors["ir_left_ray"] = 1;
+                } else
+                    sensors["ir_left_ray"] = 0;
+            if (rightray.x >= x_ini && rightray.x <= x_end)
+                if (rightray.y <= y_point_right) {
+                    //////$("#textbox_collision").val("ir_right_ray");
+                    sensors["ir_right_ray"] = 1
+                } else
+                    sensors["ir_right_ray"] = 0;
+
+        }
+
+    }
+}
+
+
+
+
+// not_active_colors
+var default_colors = [];
+
+function detect_collision(object1, object2) {
+    firtstBB = new THREE.Box3().setFromObject(all_objects[object1]);
+    secondBB = new THREE.Box3().setFromObject(all_objects[object2]);
+    /*
+    if (default_colors[object1] == undefined)
+        default_colors[object1] = all_objects[object1].material.color.getHex();
+    if (default_colors[object2] == undefined)
+        default_colors[object2] = all_objects[object2].material.color.getHex();
+        */
+
+    //var collision = isIntersectionBox(firtstBB, secondBB);
+    collision = firtstBB.intersectsBox(secondBB);
+    if (collision == true) {
+        $("#textbox_collision").val(object2);
+        sensors[object2] = 0;  //active low
+        //[object2].geometry.faces[0].color.setHex(0x51e61d);
+    } else {
+        sensors[object2] = 1;
+        //console.log("aaaa=" + [object2].geometry.faces[0].color.getHex());
+        //[object2].material.color.setHex( default_colors[object2] );
+    }
+    return collision;
+}
+
+
+
+function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				controls.handleResize();
+				render();
+}
+
+
+
+
+function addGround(){
+
+	//create the ground material using MeshLambert Material
+		var groundMat = new THREE.MeshBasicMaterial( {color: 0x3f9437, side: THREE.DoubleSide}  );
+
+		//create the plane geometry
+		var geometry = new THREE.PlaneGeometry(400,400);
+
+		//create the ground form the geometry and material
+		var ground = new THREE.Mesh(geometry,groundMat); 
+    ground.position.y = 0; //lower it 
+    ground.rotation.x = -Math.PI/2;
+		ground.doubleSided = true; 
+		//add the ground to the scene
+		scene.add(ground); 
+
+	}
+
+
+
+
+
+
+function loadModel(model_name, model_location) {
+	var objectLoader = new THREE.ObjectLoader();
+	objectLoader.load(model_location, function ( obj ) {					
+		scene.add( obj );
+		all_objects[model_name]=obj;
+		if(model_name=='wash_station') {
+			all_objects["horizontal_mechanism"] = obj.getObjectByName( "horizontal_mechanism", true );	
+			all_objects["vertical_mechanism"] = obj.getObjectByName( "vertical_mechanism", true );
+			all_objects["vertical_mechanism"] = obj.getObjectByName( "vertical_mechanism", true );
+			all_objects["horizontal_sweep"] = obj.getObjectByName( "horizontal_sweep", true );
+
+			all_objects["ir_left_ray" ] = obj.getObjectByName( "ir_left_ray", true );
+			all_objects["ir_right_ray"] = obj.getObjectByName("ir_right_ray", true);
+
+			all_objects["contact_begin"] = obj.getObjectByName("contact_begin", true);
+			all_objects["contact_end"] = obj.getObjectByName("contact_end", true);
+
+			all_objects["switch_begin"] = obj.getObjectByName("switch_begin", true);
+			all_objects["switch_end"] = obj.getObjectByName("switch_end", true);
+
+			all_objects["switch_up"] = obj.getObjectByName("switch_up", true);
+			all_objects["switch_down"] = obj.getObjectByName("switch_down", true);
+
+			all_objects["contact_up_down"] = obj.getObjectByName("contact_up_down", true);
+
+			all_objects["left_sweep"] = obj.getObjectByName("left_sweep", true);
+			all_objects["right_sweep"] = obj.getObjectByName("right_sweep", true);
+			all_objects["horizontal_sweep"] = obj.getObjectByName("horizontal_sweep", true);
+
+			
+			all_objects["left_sweep"].material.map = THREE.ImageUtils.loadTexture('models/texture_vertical_brush.jpg');
+			all_objects["left_sweep"].material.needsUpdate = true;
+
+			all_objects["right_sweep"].material.map = THREE.ImageUtils.loadTexture('models/texture_vertical_brush.jpg');
+			all_objects["right_sweep"].material.needsUpdate = true;
+
+			all_objects["horizontal_sweep"].material.map = THREE.ImageUtils.loadTexture('models/texture_vertical_brush.jpg');
+			all_objects["horizontal_sweep"].material.needsUpdate = true;
+
+			//alert("lr="+all_objects["ir_left_ray"]);
+			//alert("rr="+all_objects["ir_right_ray"]);
+			//alert("all_objects[\"horizontal_sweep\"]="+all_objects["horizontal_sweep"]);
+		}
+		if(model_name=='car') {
+		    all_objects["car"] = obj;
+            //startWorker();
+		}	
+
+	} );
+	
+}
+
+
+function loadObj() {
+
+	var manager = new THREE.LoadingManager();
+
+				manager.onProgress = function ( item, loaded, total ) {
+
+
+
+					console.log( item, loaded, total );
+
+
+
+				};
+
+
+	var onProgress = function ( xhr ) {
+
+					if ( xhr.lengthComputable ) {
+
+						var percentComplete = xhr.loaded / xhr.total * 100;
+
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+
+					}
+
+				};
+
+				var onError = function ( xhr ) {
+
+				};
+
+
+	var loader = new THREE.OBJLoader( manager );
+    loader.load( 'models/car.obj', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							//child.material.map = texture;
+						}
+
+					} );
+
+					//object.position.y = - 95;
+					scene.add( object );
+
+				}, onProgress, onError );
+}
+
+
+
+ function isIntersectionBox( box1, box2 ) {
+                // using 6 splitting planes to rule out intersections.
+                if ( box1.max.x < box2.min.x || box2.min.x > box1.max.x ||
+                     box1.max.y < box2.min.y || box2.min.y > box1.max.y ) {
+                        return false;
+                }
+                return true;
+ }
+
+
+
+
+
+
+/*
+ 
+ function worker_event(event) {
+
+     document.getElementById("result").innerHTML = event.data;
+               
+   
+ 
+         $.post("/carwash/set_values", {
+             "P0.5": sensors["switch_begin"],
+             "P0.6": sensors["switch_end"],
+             "P0.3": sensors["switch_down"],
+             "P0.4": sensors["switch_up"],
+             "P0.1": sensors["ir_left_ray"],
+             "P0.2": sensors["ir_right_ray"],
+
+             "I0.5": sensors["switch_begin"],
+             "I0.6": sensors["switch_end"],
+             "I0.3": sensors["switch_down"],
+             "I0.4": sensors["switch_up"],
+             "I0.1": sensors["ir_left_ray"],
+             "I0.2": sensors["ir_right_ray"]
+         }, function (data, status) {
+             registers = JSON.parse(data);
+
+             for (i = 0; i < registers.length; i++) {
+                 //actuators[registers[i].reg] = registers[i].value;    
+
+
+
+                 //Console.log(registers[i].value); 
+                 if (registers[i].reg == "P2.0" || registers[i].reg == "Q0.0")
+                     move_right = registers[i].value;
+
+
+                 if (registers[i].reg == "P2.1" || registers[i].reg == "Q0.1")
+                     move_left = registers[i].value;
+
+
+                 if (registers[i].reg == "P2.2" || registers[i].reg == "Q0.2")
+                     move_up = registers[i].value;
+
+
+                 if (registers[i].reg == "P2.3" || registers[i].reg == "Q0.3")
+                     move_down = registers[i].value;
+
+
+                 if (registers[i].reg == "P2.5" || registers[i].reg == "Q0.5")
+                     rotate_sweep_horiz = registers[i].value;
+
+
+                 if (registers[i].reg == "P2.4" || registers[i].reg == "Q0.4")
+                     rotate_sweep_verti = registers[i].value;
+
+
+                 refresh_it = true;
+                 mutex = 1;
+             }
+
+
+         });
+     
+ }
+
+*/
+
+
+ function worker_event(event) {
+
+     
+
+
+
+     $.post("/carwash/set_values", {
+         "P0.5": sensors["switch_begin"],
+         "P0.6": sensors["switch_end"],
+         "P0.3": sensors["switch_down"],
+         "P0.4": sensors["switch_up"],
+         "P0.1": sensors["ir_left_ray"],
+         "P0.2": sensors["ir_right_ray"],
+
+         "I0.5": sensors["switch_begin"],
+         "I0.6": sensors["switch_end"],
+         "I0.3": sensors["switch_down"],
+         "I0.4": sensors["switch_up"],
+         "I0.1": sensors["ir_left_ray"],
+         "I0.2": sensors["ir_right_ray"]
+     }, function (data, status) {
+         registers = JSON.parse(data);
+
+         for (i = 0; i < registers.length; i++) {
+             //actuators[registers[i].reg] = registers[i].value;    
+
+
+
+             //Console.log(registers[i].value); 
+             if (registers[i].reg == "P2.0" || registers[i].reg == "Q0.0")
+                 move_right = registers[i].value;
+
+
+             if (registers[i].reg == "P2.1" || registers[i].reg == "Q0.1")
+                 move_left = registers[i].value;
+
+
+             if (registers[i].reg == "P2.2" || registers[i].reg == "Q0.2")
+                 move_up = registers[i].value;
+
+
+             if (registers[i].reg == "P2.3" || registers[i].reg == "Q0.3")
+                 move_down = registers[i].value;
+
+
+             if (registers[i].reg == "P2.5" || registers[i].reg == "Q0.5")
+                 rotate_sweep_horiz = registers[i].value;
+
+
+             if (registers[i].reg == "P2.4" || registers[i].reg == "Q0.4")
+                 rotate_sweep_verti = registers[i].value;
+
+
+             refresh_it = true;
+             mutex = 1;
+             document.getElementById("result").innerHTML = event.data;
+         }
+
+     }).fail(function (error) {
+        // console.log("here is the error: " + error);
+     });
+
+ }
+
+
+
+
+
+ function startWorker() {
+     if (typeof (Worker) !== "undefined") {
+         if (typeof (the_worker) == "undefined") {
+             the_worker = new Worker("js/theworker.js");
+         }
+         the_worker.onmessage = worker_event;
+         /*** fim post data *****/
+     } else {
+         document.getElementById("result").innerHTML = "Sorry! No Web Worker support.";
+     }
+ }
+
+
+
+ function stopWorker() {
+     the_worker.terminate();
+     the_worker = undefined;
+ }
+
+ 

@@ -1,0 +1,23 @@
+﻿  interface.c
+C:\str\source\interface.c(300,1): warning C4142: 'closeChannels': benign redefinition of type
+c:\str\include\interface.h(10): message : see declaration of 'closeChannels'
+  mongoose.c
+  sim_server.c
+  Generating Code...
+  labwork1.cpp
+C:\str\labwork1\labwork1.cpp(1129,7): warning C4101: 'key': unreferenced local variable
+  my_interaction_functions.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'LIBCMTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+freeRTOS.lib(croutine.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(croutine.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(heap_5.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(heap_5.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(timers.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(timers.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(interrupts.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(interrupts.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(main.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(main.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(list.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(list.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(port.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(port.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(queue.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(queue.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(tasks.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(tasks.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(main_blinky.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(main_blinky.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+freeRTOS.lib(Run-time-stats-utils.obj) : warning LNK4099: PDB 'RTOSDemo.pdb' was not found with 'freeRTOS.lib(Run-time-stats-utils.obj)' or at 'C:\str\labwork1\Debug\RTOSDemo.pdb'; linking object as if no debug info
+  labwork1.vcxproj -> C:\str\labwork1\Debug\labwork1.exe

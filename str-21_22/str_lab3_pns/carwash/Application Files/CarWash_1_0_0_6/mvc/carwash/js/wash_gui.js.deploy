@@ -1,0 +1,282 @@
+
+
+
+
+var move_up=false;
+var move_down=false;
+var move_left=false;
+var move_right=false;
+var rotate_sweep_horiz = false;
+var rotate_sweep_verti = false;
+
+
+$( "#up" ).click(function() {
+  	move_up=1;
+  	move_down=0;
+});
+
+$( "#down" ).click(function() {
+	move_up=0;
+  	move_down=1;
+});
+
+$( "#stop_up_down" ).click(function() {
+	move_up=0;
+  	move_down=0;
+});
+
+
+
+$( "#left" ).click(function() {
+  	move_left=1;
+  	move_right=0;
+});
+
+
+$( "#right" ).click(function() {
+	move_left=0;
+  	move_right=1;
+});
+
+$( "#stop_left_right" ).click(function() {
+  	move_right=0;
+  	move_left=0;
+});
+
+
+
+
+$( "#horiz_sweep_on" ).click(function() {
+  	rotate_sweep_horiz=1;
+});
+
+
+$( "#horiz_swepp_off" ).click(function() {
+  	rotate_sweep_horiz=0;
+});
+
+
+$( "#vertc_sweep_on" ).click(function() {
+    rotate_sweep_verti = 1;
+});
+
+
+$( "#vertc_swepp_off" ).click(function() {
+    rotate_sweep_verti = 0;
+});
+
+
+$( "#do_stuff" ).click(function() {
+  	/*var points = [{"x":-2500, "y":450}, {"x":-1111, "y":2222}, {"x":-1930, "y":1640}];
+  	var jsonStr = JSON.stringify(points);
+  	var  jsonObj = JSON.parse(jsonStr);
+  	alert(jsonObj.length);
+  	alert(jsonObj[1].x);
+  	alert(jsonObj[1].y);
+
+    //alert(jsonStr);
+    */
+
+    $.getJSON("models/volkswagen-touareg-contour.json", function(jsonObj) {
+    	//console.log(jsonObj); 
+    	alert(jsonObj.length);
+	  	alert(jsonObj[1].x);
+	  	alert(jsonObj[1].y);
+
+	});
+});
+
+$("#start_worker").click(function () {
+    startWorker();
+    
+});
+
+
+$("#stop_worker").click(function () {
+    stopWorker();
+});
+
+/*
+$("#range_size_x").change(function(){
+    var newval=$(this).val();
+    $("#textbox_size_x").val(newval);   
+    updateObject();
+
+  })
+
+  $("#range_size_y").change(function(){
+    var newval=$(this).val();
+    $("#textbox_size_y").val(newval);   
+    updateObject();
+  })
+
+  $("#range_size_z").change(function(){
+    var newval=$(this).val();
+    $("#textbox_size_z").val(newval);   
+    updateObject();
+  })
+
+
+
+  $("#range_position_x").change(function(){
+    var newval=$(this).val();
+    $("#textbox_position_x").val(newval);   
+    updateObject();
+  })
+
+  $("#range_position_y").change(function(){
+    var newval=$(this).val();
+    $("#textbox_position_y").val(newval);   
+    updateObject();
+  })
+
+  $("#range_position_z").change(function(){
+    var newval=$(this).val();
+    $("#textbox_position_z").val(newval);   
+    updateObject();
+  })
+
+
+    $("#range_rotation_x").change(function(){
+    var newval=$(this).val();
+    $("#textbox_rotation_x").val(newval);   
+    updateObject();
+  })
+
+  $("#range_rotation_y").change(function(){
+    var newval=$(this).val();
+    $("#textbox_rotation_y").val(newval);   
+    updateObject();
+  })
+
+  $("#range_rotation_z").change(function(){
+    var newval=$(this).val();
+    $("#textbox_rotation_z").val(newval);   
+    updateObject();
+  })
+
+
+
+
+
+  $("#textbox_size_x").change(function(){
+    var newval=$(this).val();
+    $("#range_size_x").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_size_y").change(function(){
+    var newval=$(this).val();
+    $("#range_size_y").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_size_z").change(function(){
+    var newval=$(this).val();
+    $("#range_size_z").val(newval);   
+    updateObject();
+  })
+
+
+
+  $("#textbox_position_x").change(function(){
+    var newval=$(this).val();
+    $("#range_position_x").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_position_y").change(function(){
+    var newval=$(this).val();
+    $("#range_position_y").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_position_z").change(function(){
+    var newval=$(this).val();
+    $("#range_position_z").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_rotation_x").change(function(){
+    var newval=$(this).val();
+    $("#range_rotation_x").val(newval);   
+    updateObject();
+  })
+
+
+  $("#textbox_rotation_y").change(function(){
+    var newval=$(this).val();
+    $("#range_rotation_y").val(newval);   
+    updateObject();
+  })
+
+
+$("#textbox_rotation_z").change(function(){
+    var newval=$(this).val();
+    $("#range_rotation_z").val(newval);   
+    updateObject();
+  })
+
+
+
+$("#textbox_name").change(function(){
+    var newval=$(this).val();
+    object = all_objects[newval];
+    alert("aaaa");
+    
+    $("#textbox_size_x").val(object.geometry.parameters.width);         
+    $("#textbox_size_y").val(object.geometry.parameters.height);
+    $("#textbox_size_z").val(object.geometry.parameters.depth);
+
+    $("#textbox_position_x").val(object.position.x);         
+    $("#textbox_position_y").val(object.position.y);
+    $("#textbox_position_z").val(object.position.z);
+
+    
+    $("#textbox_rotation_x").val(object.rotation.x);         
+    $("#textbox_rotation_y").val(object.rotation.y); 
+    $("#textbox_rotation_z").val(object.rotation.z); 
+
+
+    $("#range_size_x").val(object.geometry.parameters.width);
+    $("#range_size_y").val(object.geometry.parameters.height);
+    $("#range_size_z").val(object.geometry.parameters.depth);
+
+    $("#range_position_x").val(object.position.x);         
+    $("#range_position_y").val(object.position.y);
+    $("#range_position_z").val(object.position.z);
+
+    
+    $("#range_rotation_x").val(object.rotation.x);         
+    $("#range_rotation_y").val(object.rotation.y); 
+    $("#range_rotation_z").val(object.rotation.z); 
+
+  })
+
+
+function updateObject(){
+
+	object = all_objects[$("#textbox_name").val()];
+	object.scale.x = $("#textbox_size_x").val();         
+    object.scale.y = $("#textbox_size_y").val();
+    object.scale.z = $("#textbox_size_z").val();
+
+    object.position.set ( $("#textbox_position_x").val(),
+                          $("#textbox_position_y").val(),
+     					  $("#textbox_position_z").val());
+
+    
+    object.rotation.x = $("#textbox_rotation_x").val();         
+    object.rotation.y = $("#textbox_rotation_y").val(); 
+    object.rotation.z = $("#textbox_rotation_z").val(); 
+    object.__dirtyPosition = true;
+
+    
+}
+
+*/

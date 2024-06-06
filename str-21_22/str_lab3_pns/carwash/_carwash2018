@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml>
+  <net id="n1543850816911">
+    <name>
+      <text>CarWash</text>
+    </name>
+    <import>
+      <text>import javax.swing.*;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;</text>
+    </import>
+    <declaration>
+      <text>boolean ports_ok=false;
+
+boolean simple_wash_selected=false;
+boolean complete_wash_selected=false;
+boolean is_washing=false;
+
+boolean choice_done=false;
+boolean up_down_behaviour=false;
+
+public void go_right()
+{
+  lib.Hardware.enter_critical_area();  
+
+  int v = lib.Hardware.s_read_port(2);
+  v = lib.Hardware.setBitValue(v, 0, true);
+  v = lib.Hardware.setBitValue(v, 1, false);
+  lib.Hardware.s_write_port(2, v);
+  
+  lib.Hardware.exit_critical_area();
+}
+
+
+public void go_left()
+{
+    //TODO
+}</text>
+    </declaration>
+    <place id="p50" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 1, true);&#10;v = lib.Hardware.setBitValue(v, 0, false);&#10;v = lib.Hardware.setBitValue(v, 2, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;&#10;return true;">
+      <graphics>
+        <position x="825" y="395"/>
+      </graphics>
+      <name>
+        <text>go_left</text>
+        <graphics>
+          <offset x="50" y="0"/>
+        </graphics>
+      </name>
+    </place>
+    <place id="p52" placeCODE="simple_wash_selected=false;&#10;is_washing =false;&#10;&#10;lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 2, false);&#10;v = lib.Hardware.setBitValue(v, 3, false);&#10;&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;return true;&#10;&#10;&#10;">
+      <graphics>
+        <position x="835" y="595"/>
+      </graphics>
+      <name>
+        <text>stop_simple_wash</text>
+        <graphics>
+          <offset x="10" y="30"/>
+        </graphics>
+      </name>
+    </place>
+    <place id="p51" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 3, true);&#10;v = lib.Hardware.setBitValue(v, 2, false);&#10;v = lib.Hardware.setBitValue(v, 1, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;&#10;&#10;&#10;return true;">
+      <graphics>
+        <position x="835" y="485"/>
+      </graphics>
+      <name>
+        <text>go_down</text>
+        <graphics>
+          <offset x="70" y="0"/>
+        </graphics>
+      </name>
+    </place>
+    <place id="p97" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 3, true);&#10;v = lib.Hardware.setBitValue(v, 2, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;// the &quot;return&quot; statement must be outside critical area,&#10;//otherwise it will affect the other behaviors&#10;&#10;return true;">
+      <graphics>
+        <position x="605" y="365"/>
+      </graphics>
+      <name>
+        <text>going_down</text>
+        <graphics>
+          <offset x="77" y="3"/>
+        </graphics>
+      </name>
+    </place>
+    <place id="p12" placeCODE="System.out.println(&quot;Starting left/right behavior&quot;);&#10;return true;">
+      <graphics>
+        <position x="165" y="315"/>
+      </graphics>
+      <name>
+        <text>LEFT_RIGHT_behavior (not used)</text>
+        <graphics>
+          <offset x="10" y="-40"/>
+        </graphics>
+      </name>
+      <initialMarking>
+        <text>1</text>
+      </initialMarking>
+    </place>
+    <arc id="o35" source="t88" target="p81">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="595" y="270"/>
+        <position x="517" y="227"/>
+      </graphics>
+    </arc>
+    <place id="p14" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 1, true);&#10;v = lib.Hardware.setBitValue(v, 0, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;&#10;return true;">
+      <graphics>
+        <position x="165" y="525"/>
+      </graphics>
+      <name>
+        <text>going_lefft</text>
+        <graphics>
+          <offset x="68" y="5"/>
+        </graphics>
+      </name>
+    </place>
+    <transition id="t54">
+      <graphics>
+        <position x="895" y="345"/>
+      </graphics>
+      <name>
+        <text>reached_up</text>
+        <graphics>
+          <offset x="50" y="20"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+//sensor is active low
+boolean is_at_up = !lib.Hardware.getBitValue(v,4); 
+return is_at_up;</text>
+      </guard>
+    </transition>
+    <place id="p13" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 0, true);&#10;v = lib.Hardware.setBitValue(v, 1, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;return true;">
+      <graphics>
+        <position x="165" y="425"/>
+      </graphics>
+      <name>
+        <text>going_right</text>
+        <graphics>
+          <offset x="70" y="-10"/>
+        </graphics>
+      </name>
+    </place>
+    <transition id="t53">
+      <graphics>
+        <position x="885" y="265"/>
+      </graphics>
+      <name>
+        <text>reached_right</text>
+        <graphics>
+          <offset x="30" y="10"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+//sensor is active low
+boolean is_at_right = !lib.Hardware.getBitValue(v,6); 
+return is_at_right;</text>
+      </guard>
+    </transition>
+    <transition id="t56">
+      <graphics>
+        <position x="905" y="535"/>
+      </graphics>
+      <name>
+        <text>reached_down</text>
+        <graphics>
+          <offset x="50" y="20"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+
+boolean sees_floor = !lib.Hardware.getBitValue(v,3);  
+return sees_floor;</text>
+      </guard>
+    </transition>
+    <transition id="t55">
+      <graphics>
+        <position x="905" y="435"/>
+      </graphics>
+      <name>
+        <text>reached_left</text>
+        <graphics>
+          <offset x="40" y="10"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+//sensor is active low
+boolean is_at_left = !lib.Hardware.getBitValue(v,5); 
+return is_at_left;</text>
+      </guard>
+    </transition>
+    <transition id="t16">
+      <graphics>
+        <position x="65" y="475"/>
+      </graphics>
+      <name>
+        <text>reached_right_position</text>
+        <graphics>
+          <offset x="18" y="5"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+//sensor is active low
+boolean is_at_right = !lib.Hardware.getBitValue(v,6); 
+return is_at_right;</text>
+      </guard>
+    </transition>
+    <transition id="t15">
+      <graphics>
+        <position x="165" y="365"/>
+      </graphics>
+      <name>
+        <text>ports_ok</text>
+        <graphics>
+          <offset x="48" y="5"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return ports_ok &amp;&amp; false;</text>
+      </guard>
+    </transition>
+    <transition id="t17">
+      <graphics>
+        <position x="255" y="475"/>
+      </graphics>
+      <name>
+        <text>reached_left_position</text>
+        <graphics>
+          <offset x="68" y="5"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+//sensor is active low
+boolean is_at_left = !lib.Hardware.getBitValue(v,5); 
+return is_at_left;</text>
+      </guard>
+    </transition>
+    <arc id="i249" source="p245" target="t246">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="835" y="101"/>
+        <position x="835" y="150"/>
+      </graphics>
+    </arc>
+    <arc id="o131" source="t128" target="p129">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="409" y="240"/>
+        <position x="392" y="256"/>
+      </graphics>
+    </arc>
+    <transition id="t66">
+      <graphics>
+        <position x="735" y="265"/>
+      </graphics>
+      <name>
+        <text>t66</text>
+        <graphics>
+          <offset x="50" y="0"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return true;</text>
+      </guard>
+    </transition>
+    <transition id="t27">
+      <graphics>
+        <position x="115" y="155"/>
+      </graphics>
+      <name>
+        <text>Wash is ready </text>
+        <graphics>
+          <offset x="-4" y="22"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return true;</text>
+      </guard>
+    </transition>
+    <place id="p1" placeCODE="System.out.println(&quot;Initiaziling ports&quot;);&#10;&#10;// if using 3D simulator in a different port,&#10;// then change the port value here&#10;lib.Hardware.simulator_address(&quot;carwash&quot;, &quot;127.0.0.1&quot;, 9999);&#10;&#10;lib.Hardware.create_di(0);&#10;lib.Hardware.create_di(1);&#10;lib.Hardware.create_do(2);&#10;ports_ok=true;&#10;&#10;&#10;(new JFrame() {&#10;      JLabel l;&#10;      public void start() {&#10;        l = new JLabel();&#10;        l.setText(&quot;&gt;&gt; Select Wash type  &lt;&lt;&quot;);&#10;        JButton but_simple = new JButton(&quot;Simple wash&quot;);&#10;        JButton but_complete = new JButton(&quot;Complete wash&quot;);&#10;        JButton but_vip = new JButton(&quot;VIP wash&quot;); &#10;        JButton but_stop = new JButton(&quot;stop&quot;);&#10;        JButton but_resume = new JButton(&quot;resume&quot;);&#10;        JButton but_power = new JButton(&quot;power down&quot;);&#10;        add(l);&#10;        add(but_simple);&#10;        add(but_complete);&#10;        add(but_vip);&#10;        add(but_stop);&#10;        add(but_resume);&#10;        add(but_power);&#10;        but_simple.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; SIMPLE wash selected...  &lt;&lt;&quot;);&#10;            simple_wash_selected=true;&#10;          }&#10;        });&#10;        but_complete.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; COMPLETE wash selected...  &lt;&lt;&quot;);&#10;          }&#10;        });&#10;        but_vip.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; VIP wash selected...  &lt;&lt;&quot;);&#10;          }&#10;        });    &#10;        but_stop.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; stoped pressed...  &lt;&lt;&quot;);&#10;          }&#10;        });&#10;        but_resume.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; resume pressed...  &lt;&lt;&quot;);&#10;          }&#10;        });&#10;        but_power.addActionListener(new ActionListener() {&#10;          public void actionPerformed(ActionEvent e) {&#10;            l.setText(&quot;&gt;&gt; power pressed...  &lt;&lt;&quot;);&#10;          }&#10;        });&#10;        setLayout(new FlowLayout(FlowLayout.CENTER));&#10;        setSize(200, 400);&#10;        setVisible(true);&#10;&#10;        setDefaultCloseOperation(DISPOSE_ON_CLOSE);&#10;//      setDefaultCloseOperation(EXIT_ON_CLOSE);&#10;      }&#10;    }).start();&#10;&#10;&#10;//return true, just runs once&#10;return true;">
+      <graphics>
+        <position x="115" y="65"/>
+      </graphics>
+      <name>
+        <text>Wash_initialization</text>
+        <graphics>
+          <offset x="0" y="-40"/>
+        </graphics>
+      </name>
+      <initialMarking>
+        <text>1</text>
+      </initialMarking>
+    </place>
+    <arc id="i90" source="p80" target="t85">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="495" y="91"/>
+        <position x="495" y="150"/>
+      </graphics>
+    </arc>
+    <arc id="i94" source="p82" target="t87">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="400" y="409"/>
+        <position x="480" y="421"/>
+      </graphics>
+    </arc>
+    <arc id="o91" source="t85" target="p81">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="494" y="160"/>
+        <position x="494" y="189"/>
+      </graphics>
+    </arc>
+    <arc id="o93" source="t86" target="p82">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="356" y="330"/>
+        <position x="368" y="380"/>
+      </graphics>
+    </arc>
+    <arc id="i58" source="p48" target="t53">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="852" y="233"/>
+        <position x="879" y="260"/>
+      </graphics>
+    </arc>
+    <arc id="o99" source="t87" target="p97">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="513" y="420"/>
+        <position x="583" y="378"/>
+      </graphics>
+    </arc>
+    <arc id="o57" source="t246" target="p48">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="835" y="160"/>
+        <position x="834" y="189"/>
+      </graphics>
+    </arc>
+    <arc id="i18" source="p12" target="t15">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="165" y="341"/>
+        <position x="165" y="360"/>
+      </graphics>
+    </arc>
+    <arc id="o59" source="t53" target="p49">
+      <expression>
+        <text>1@0</text>
+      </expression>
+      <graphics>
+        <position x="878" y="270"/>
+        <position x="854" y="288"/>
+      </graphics>
+    </arc>
+    <arc id="o19" source="t15" target="p13">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="165" y="370"/>
+        <position x="165" y="399"/>
+      </graphics>
+    </arc>
+    <arc id="i100" source="p97" target="t88">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="605" y="339"/>
+        <position x="605" y="280"/>
+      </graphics>
+    </arc>
+    <arc id="i60" source="p49" target="t54">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="856" y="319"/>
+        <position x="887" y="340"/>
+      </graphics>
+    </arc>
+    <arc id="i62" source="p50" target="t55">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="847" y="406"/>
+        <position x="895" y="430"/>
+      </graphics>
+    </arc>
+    <arc id="i20" source="p13" target="t16">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="142" y="436"/>
+        <position x="74" y="470"/>
+      </graphics>
+    </arc>
+    <arc id="i64" source="p51" target="t56">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="855" y="500"/>
+        <position x="897" y="530"/>
+      </graphics>
+    </arc>
+    <place id="p81" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 2, false);&#10;v = lib.Hardware.setBitValue(v, 3, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;//must be outside critical area,&#10;//otherwise affects the other behaviors&#10;lib.Hardware.sleep(100);&#10;&#10;return true;">
+      <graphics>
+        <position x="495" y="215"/>
+      </graphics>
+      <name>
+        <text>STOP_up_down</text>
+        <graphics>
+          <offset x="90" y="-10"/>
+        </graphics>
+      </name>
+    </place>
+    <arc id="i22" source="p14" target="t17">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="187" y="512"/>
+        <position x="245" y="480"/>
+      </graphics>
+    </arc>
+    <place id="p80" placeCODE="System.out.println(&quot;Starting up/down behavior&quot;);&#10;return true;">
+      <graphics>
+        <position x="495" y="65"/>
+      </graphics>
+      <name>
+        <text>UP_DOWN_behavior</text>
+        <graphics>
+          <offset x="3" y="-39"/>
+        </graphics>
+      </name>
+      <initialMarking>
+        <text>1</text>
+      </initialMarking>
+    </place>
+    <place id="p82" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 2, true);&#10;v = lib.Hardware.setBitValue(v, 3, false);&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;//must be outside critical area,&#10;//otherwise affects the other behaviors&#10;lib.Hardware.sleep(100);&#10;&#10;return true;">
+      <graphics>
+        <position x="375" y="405"/>
+      </graphics>
+      <name>
+        <text>going_up</text>
+        <graphics>
+          <offset x="50" y="0"/>
+        </graphics>
+      </name>
+    </place>
+    <arc id="o61" source="t54" target="p50">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="887" y="350"/>
+        <position x="845" y="379"/>
+      </graphics>
+    </arc>
+    <arc id="i67" source="p52" target="t66">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="827" y="570"/>
+        <position x="736" y="270"/>
+      </graphics>
+    </arc>
+    <arc id="o63" source="t55" target="p51">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="897" y="440"/>
+        <position x="855" y="469"/>
+      </graphics>
+    </arc>
+    <arc id="i28" source="p1" target="t27">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="115" y="91"/>
+        <position x="115" y="150"/>
+      </graphics>
+    </arc>
+    <arc id="o65" source="t56" target="p52">
+      <expression>
+        <text>1@0</text>
+      </expression>
+      <graphics>
+        <position x="899" y="540"/>
+        <position x="854" y="578"/>
+      </graphics>
+    </arc>
+    <arc id="o21" source="t16" target="p14">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="75" y="480"/>
+        <position x="142" y="513"/>
+      </graphics>
+    </arc>
+    <place id="p245" placeCODE="return true;">
+      <graphics>
+        <position x="835" y="75"/>
+      </graphics>
+      <name>
+        <text>SIMPLE_WASH</text>
+        <graphics>
+          <offset x="0" y="-40"/>
+        </graphics>
+      </name>
+      <initialMarking>
+        <text>1</text>
+      </initialMarking>
+    </place>
+    <transition id="t85">
+      <graphics>
+        <position x="495" y="155"/>
+      </graphics>
+      <name>
+        <text>ports_ok</text>
+        <graphics>
+          <offset x="70" y="0"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return ports_ok;</text>
+      </guard>
+    </transition>
+    <arc id="o68" source="t66" target="p245">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="737" y="260"/>
+        <position x="822" y="97"/>
+      </graphics>
+    </arc>
+    <arc id="o23" source="t17" target="p13">
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="246" y="470"/>
+        <position x="187" y="437"/>
+      </graphics>
+    </arc>
+    <transition id="t87">
+      <graphics>
+        <position x="505" y="425"/>
+      </graphics>
+      <name>
+        <text>car_and_floor_not_deteted</text>
+        <graphics>
+          <offset x="20" y="30"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+
+boolean sees_floor = !lib.Hardware.getBitValue(v,3); 
+
+boolean sees_car  = lib.Hardware.getBitValue(v,1) 
+                 || lib.Hardware.getBitValue(v,2);  
+
+return !sees_floor &amp;&amp; !sees_car;</text>
+      </guard>
+    </transition>
+    <transition id="t86">
+      <graphics>
+        <position x="355" y="325"/>
+      </graphics>
+      <name>
+        <text>car_is_detected</text>
+        <graphics>
+          <offset x="63" y="16"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+
+
+
+boolean sees_car  = lib.Hardware.getBitValue(v,1) 
+                 || lib.Hardware.getBitValue(v,2);  
+
+return sees_car;</text>
+      </guard>
+    </transition>
+    <place id="p49" placeCODE="lib.Hardware.enter_critical_area();&#10;&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 0, false);&#10;v = lib.Hardware.setBitValue(v, 2, true);&#10;v = lib.Hardware.setBitValue(v, 3, false);&#10;&#10;v = lib.Hardware.setBitValue(v, 4, false);&#10;v = lib.Hardware.setBitValue(v, 5, false);&#10;&#10;lib.Hardware.s_write_port(2, v);&#10;&#10;lib.Hardware.exit_critical_area();&#10;&#10;&#10;&#10;return true;">
+      <graphics>
+        <position x="835" y="305"/>
+      </graphics>
+      <name>
+        <text>go_up</text>
+        <graphics>
+          <offset x="50" y="0"/>
+        </graphics>
+      </name>
+    </place>
+    <place id="p48" placeCODE="&#10;go_right();&#10;up_down_behaviour=true;&#10;&#10;lib.Hardware.enter_critical_area();&#10;int v = lib.Hardware.s_read_port(2);&#10;v = lib.Hardware.setBitValue(v, 4, true);&#10;v = lib.Hardware.setBitValue(v, 5, true);&#10;lib.Hardware.s_write_port(2, v);&#10;lib.Hardware.exit_critical_area();&#10;&#10;&#10;return true;">
+      <graphics>
+        <position x="835" y="215"/>
+      </graphics>
+      <name>
+        <text>go_rigth</text>
+        <graphics>
+          <offset x="50" y="0"/>
+        </graphics>
+      </name>
+    </place>
+    <transition id="t88">
+      <graphics>
+        <position x="605" y="275"/>
+      </graphics>
+      <name>
+        <text>car_or_floor_detected</text>
+        <graphics>
+          <offset x="87" y="23"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>int v = lib.Hardware.s_read_port(0);
+
+boolean sees_floor = !lib.Hardware.getBitValue(v,3); 
+
+boolean sees_car  = lib.Hardware.getBitValue(v,1) 
+                 || lib.Hardware.getBitValue(v,2);  
+
+return sees_floor || sees_car;</text>
+      </guard>
+    </transition>
+    <transition id="t246">
+      <graphics>
+        <position x="835" y="155"/>
+      </graphics>
+      <name>
+        <text>simple_selected</text>
+        <graphics>
+          <offset x="90" y="0"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return simple_wash_selected;</text>
+      </guard>
+    </transition>
+    <arc id="i130" source="p81" target="t128">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="470" y="221"/>
+        <position x="434" y="230"/>
+      </graphics>
+    </arc>
+    <transition id="t128">
+      <graphics>
+        <position x="415" y="235"/>
+      </graphics>
+      <name>
+        <text>up_down_started</text>
+        <graphics>
+          <offset x="13" y="6"/>
+        </graphics>
+      </name>
+      <guard>
+        <text>return up_down_behaviour;</text>
+      </guard>
+    </transition>
+    <arc id="i132" source="p129" target="t86">
+      <expression>
+        <text>getTokenSet().size()&gt;0</text>
+      </expression>
+      <expression>
+        <text>1</text>
+      </expression>
+      <graphics>
+        <position x="364" y="298"/>
+        <position x="356" y="320"/>
+      </graphics>
+    </arc>
+    <place id="p129" placeCODE="return true;">
+      <graphics>
+        <position x="375" y="275"/>
+      </graphics>
+      <name>
+        <text>p129</text>
+        <graphics>
+          <offset x="53" y="-4"/>
+        </graphics>
+      </name>
+    </place>
+  </net>
+</pnml>

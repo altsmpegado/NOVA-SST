@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="CarWash.exe" version="1.0.0.6" publicKeyToken="d08c32260cade4c0" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="CarWash" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="CarWash.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CarWash.exe" size="30192">
+      <assemblyIdentity name="CarWash" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>8qq/hfgd3WzFcR5k5yMGjmT1mdoyDx3P+cYNluo5ZXo=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="CarWash.exe.config" size="926">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>iuYwQciJRdz+RXftl0W/gZlYjbgw/kUoENF1wX9cJk8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\index.html" size="2906">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WHRd2bwUFMSHWtjKHS+feKZ63Hhxx/vneO8CVfyY7tw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\ammo.js" size="1845086">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>FdgRFMVGIlGBXFLq4mFIlTHtwRGeGwAPU5SVVrr2tck=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\controls\TrackballControls.js" size="14045">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>o9FxgyXKzSN6imjABIgWmh/64xjIKbleVA+PuyxWMfU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\Detector.js" size="2076">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>jZmlbMipfv1JlOnQ5oaCzsIguQFxkpJ6SDV36sCku4c=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\jquery.min.js" size="86709">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\libs\stats.min.js" size="1855">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>scZlLg0QNRnJIByqrB0ZBkso5mTmVb5fXGwBZMGZVgA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\OBJLoader.js" size="18542">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>e8MfmofUxyP/aBNi5lIkvcLiOdP8MPFPs5mCLwVY0M8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\physi.js" size="44464">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>qg0EUT/WCIn6xXVgOgtRXXM6gnugczfS2iEkCUhxJdA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\physijs_worker.js" size="40293">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>3SMdTiE139bta3HAnEwod800NIq/0DEO2NMiC771G0Y=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\theworker.js" size="172">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>uRV7zEKYU3WHCXQY0AGerPHAtnozMhBKmH9EXgND68o=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\three.js" size="971467">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6uWRySw7P4M+sw3C5SoVwevYMRz41BGlxSPjRqOSOPM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\three.min.js" size="510888">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/AKnHXEmo4fJ1xZhpvxmh/PRv1eqIRAGdBSvqiPuhTw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\wash_gui.js" size="6203">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>w0qzG09A03vkPBjkwt0TPZYOjC/gCO+UVJDdKeg8rSQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\js\wash_scene.js" size="15612">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>W2oZH0yTY9sld7LN0LDagzITQMePYxLgekbwd36tchE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\models\texture_vertical_brush.jpg" size="35034">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vWmRhea7XlptYJq+ukcM+KlkAwBth6g7E5Pv1u6UY1g=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\models\volkswagen-touareg.json" size="26569896">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>v5/fR6H2Vn3TVP3U/2yI+6kQj24vUxBWGnH8MU+ezOo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\models\volkswagen-touareg-contour.json" size="371">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4yRgcOCfA9ifnkfq3UNhugmWe8SxadRs2QUQ2xZof18=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="mvc\carwash\models\wash_station.json" size="20818">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>BfNc1z1mUP1l9+FdpgGkgYKCO4WqqG6wcZQS6+EAHgA=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=DESKTOP-NDISJ8T\pc-casa" issuerKeyHash="eae6c3e4eab98da775d417b37877ed13ee733c25" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>9QSfrf4xKogHGEoir6QwqT9W+ArZvGLwp01Ny0ZjNQY=</DigestValue></Reference></SignedInfo><SignatureValue>R4helTXRjlk3LeW606B7n79hnFKkIVmBV20a0LcXGq6bD8h8B/DA/GtPILX+Qe8UR69tnMCfuVIWyhXMRh0bw6IN0I1VJ6Iw5mudhO1GrrGCxKAYCPyv7fyZwSMZ7sea+hbMoxnM5uKeC6bAPqpTDTWklaA76O9a9VFYqeZpsn0=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>6vg81hyDxFJWy5kRqVzmSgdXyCAzozLCVMJMNk3cjEHhJ8cgbwsTpFBTKxX0j3w9GFxg4AXFgCm7N8+CibOAVmPQixBSvJOdM0K0JzVDEiEnFWbA5NTfaNiQdamk09w7xwaFKgUmHHbVbB8Aoun/5JLoRIcaaEjBpLMZzr5CEm0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="06356346cb4d4da7f062bcd90af8563fa930a4af224a1807882a31fead9f04f5" Description="" Url=""><as:assemblyIdentity name="CarWash.exe" version="1.0.0.6" publicKeyToken="d08c32260cade4c0" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-NDISJ8T\pc-casa</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>0qhaI9hqxSHEFJu/kK3xIYIQB/VvzgFY+/3A935RTLA=</DigestValue></Reference></SignedInfo><SignatureValue>G6FshgT3PZ4j6A76nlOESJtbvCLdTsJz9d9jbQsR9SnetaTWhxwmAbwAr5dDyo1Z//d3BbzRi4+mwaEQLI7gw7kK7BpjTPRfFCXE2j3bx9uT6y2O6s9rTkQd7N7cfbjpHi+rhjSDoIvE556ui2WhaCRYzGj+nWWG3Nw3MyIVOHA=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>6vg81hyDxFJWy5kRqVzmSgdXyCAzozLCVMJMNk3cjEHhJ8cgbwsTpFBTKxX0j3w9GFxg4AXFgCm7N8+CibOAVmPQixBSvJOdM0K0JzVDEiEnFWbA5NTfaNiQdamk09w7xwaFKgUmHHbVbB8Aoun/5JLoRIcaaEjBpLMZzr5CEm0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB9TCCAV6gAwIBAgIQPVJTgcD6IJFK0mE2z/kX1jANBgkqhkiG9w0BAQsFADA5MTcwNQYDVQQDHi4ARABFAFMASwBUAE8AUAAtAE4ARABJAFMASgA4AFQAXABwAGMALQBjAGEAcwBhMB4XDTE2MTEyODAyMDAwNFoXDTE3MTEyODA4MDAwNFowOTE3MDUGA1UEAx4uAEQARQBTAEsAVABPAFAALQBOAEQASQBTAEoAOABUAFwAcABjAC0AYwBhAHMAYTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA6vg81hyDxFJWy5kRqVzmSgdXyCAzozLCVMJMNk3cjEHhJ8cgbwsTpFBTKxX0j3w9GFxg4AXFgCm7N8+CibOAVmPQixBSvJOdM0K0JzVDEiEnFWbA5NTfaNiQdamk09w7xwaFKgUmHHbVbB8Aoun/5JLoRIcaaEjBpLMZzr5CEm0CAwEAATANBgkqhkiG9w0BAQsFAAOBgQBUsUdZV/+g9tVXW5RCgJ3yG+mI9oa0yiBxEPZP+/rn8ZYsgQh23qXHLj+C3ofXQKm8fIfSjDDyXJynRR+DYsBuQEsBNbl++q/X/ykbS94pDaMlc5MF9jvzXBayhB20zb84AqCoaoRvmsIoPbr6bv4EJqzEHL3fg2kgdEH5cIhztQ==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

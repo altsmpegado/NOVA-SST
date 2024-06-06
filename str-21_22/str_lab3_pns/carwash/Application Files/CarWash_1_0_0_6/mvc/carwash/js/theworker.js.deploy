@@ -1,0 +1,15 @@
+﻿
+var i = 0;
+
+
+function scan_cycle() {
+    
+
+    i = i + 1;
+    postMessage(i );
+
+    //if (is_running)
+    setTimeout("scan_cycle()", 50);
+}
+
+scan_cycle();

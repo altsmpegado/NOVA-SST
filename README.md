@@ -16,3 +16,7 @@ alts
 | Project | Description | Date |
 | --- | --- | --- |
 | `rics piic dcs 2122` | [Distributed Control System](/rics_piic_dcs-21_22) | February 2022
+| `str lab1 cpp freertos 2122` | [Pharmacy Storage FreeRTOS C++](/str-21_22/str_lab1_cpp_freertos/) | October 2021
+| `str lab2 java freertos 2122` | [Manf. Distribution Line FreeRTOS Java](/str-21_22/str_lab2_java_freertos/) | November 2021
+| `str lab3 pns 2122` | [Car Wash System PetriNets](/str-21_22/str_lab3_pns/) | December 2021
+
